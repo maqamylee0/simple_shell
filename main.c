@@ -1,74 +1,107 @@
 #include "main.h"
 
 /**
- * call_fork- create a child process
- * @pid: return of process creation
- * @argv: list of arguments
- * @env: environment variables
- * Return: 0 or -1
+ * run_interactive - runs interactive mode
+ *
+ * Return: nothing
  */
-
-int call_fork(pid_t pid, char **argv, char **env)
+void run_interactive_mode(void)
 {
-	pid = fork();
-	if (pid == -1)
-		return (-1);
-	if (pid == 0)
-	{
-		int exec = execve(argv[0], argv, env);
+	char *prompt = "$";
+	char *input = NULL, *input_cpy;
+	char **argv;
+	const char *delim = " \n";
+	ssize_t nchars_read;
+	extern char **environ;
+	char **env = environ;
+	size_t n = 0;
+	int num_tokens;
 
-		if (exec == -1)
-			printf("No such file or directory");
+	while (1)
+	{
+		_puts(prompt);
+		nchars_read = getline(&input, &n, stdin);
+		if (nchars_read == -1)
+		{
+			exit(1);
+		}
+		input_cpy = allocate(nchars_read);
+		_strcpy(input_cpy, input);
+
+		argv = parse_input(input, delim, &num_tokens);
+
+		num_tokens = num_token(input_cpy, delim);
+		if (num_tokens != 2)
+		{
+			perror("many tokens");
+		}
+		else
+		{
+			execute(argv, env);
+		}
+		cleanup(argv);
 	}
-	return (0);
+	free(input);
 }
 
 /**
- * main- starting function
- * @ac: number of arguments
- * @argv: array of pointers to strings
+ * run_non_interactive_mode - run non-interactive mode
  *
- * Return: 0 for success or non zero for failure
- *
+ * Return: nothing
  */
-
-
-int main(int ac, char **argv)
+void run_non_interactive_mode(void)
 {
-	char *shell_prompt = "simple_shell $: ";
-	char *input_ptr = NULL;
-	char *str_copy = NULL;
-	ssize_t read;
-	size_t n = 0;
-	char *token = NULL;
+	char *input = NULL, *input_cpy;
+	char **argv;
 	const char *delim = " \n";
+	ssize_t nchars_read;
+	extern char **environ;
 	char **env = environ;
-	pid_t pid;
+	size_t n = 0;
+	int num_tokens;
 
-	argc = 0;
 	while (1)
 	{
-		printf("%s", shell_prompt);
-		read = getline(&input_ptr, &n, stdin);
-		if (read == -1)
-			return (-1);
-		str_copy = malloc(sizeof(char) * n);
-		strcpy(str_copy, input_ptr);
-		token = strtok(str_copy, delim);
-		argv[0] = token;
-		while (token)
+		nchars_read = getline(&input, &n, stdin);
+		if (nchars_read == -1)
 		{
-			token = strtok(NULL, delim);
-			argc++;
-			argv[argc - 1] = token;
+			break;
 		}
-		argv[argc] = NULL;
-		int ret = call_fork(pid, argv, env);
+		input_cpy = allocate(nchars_read);
+		_strcpy(input_cpy, input);
 
-		if (ret == -1)
-			return (-1);
-		wait(NULL);
+		argv = parse_input(input, delim, &num_tokens);
+
+		num_tokens = num_token(input_cpy, delim);
+		if (num_tokens != 2)
+		{
+			perror("many tokens");
+		}
+		else
+		{
+			execute(argv, env);
+		}
+		cleanup(argv);
 	}
-	free(str_copy);
+	free(input);
+}
+
+/**
+ * main - simple shell
+ * @argc: number of arguments passed to main function
+ * @argv: double pointer to arguments in string format
+ *
+ * Return: 0 (success)
+ */
+int main()
+{
+	if (isatty(STDIN_FILENO))
+	{
+		run_interactive_mode();
+	}
+	else
+	{
+		run_non_interactive_mode();
+	}
 	return (0);
 }
