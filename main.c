@@ -20,7 +20,7 @@ void run_interactive_mode(int argc, char **argv, char **envp)
 	while (1)
 	{
 		_puts(prompt);
-		nchars_read = getline(&input, &n, stdin);
+		nchars_read = _getline(&input, &n, stdin);
 		if (nchars_read == -1)
 		{
 			exit(1);
