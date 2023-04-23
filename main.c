@@ -1,21 +1,21 @@
 #include "main.h"
 
 /**
- * run_interactive - runs interactive mode
+ * run_interactive_mode - runs interactive mode
+ * @argc: number of arguments passed to shell
+ * @argv: string holding arguments
+ * @envp: environment variable
  *
  * Return: nothing
  */
-void run_interactive_mode(void)
+void run_interactive_mode(int argc, char **argv, char **envp)
 {
 	char *prompt = "$";
 	char *input = NULL, *input_cpy;
-	char **argv;
 	const char *delim = " \n";
 	ssize_t nchars_read;
-	extern char **environ;
-	char **env = environ;
+	char **env = envp;
 	size_t n = 0;
-	int num_tokens;
 
 	while (1)
 	{
@@ -28,10 +28,10 @@ void run_interactive_mode(void)
 		input_cpy = allocate(nchars_read);
 		_strcpy(input_cpy, input);
 
-		argv = parse_input(input, delim, &num_tokens);
+		argv = parse_input(input, delim, &argc);
 
-		num_tokens = num_token(input_cpy, delim);
-		if (num_tokens != 2)
+		argc = num_token(input_cpy, delim);
+		if (argc != 2)
 		{
 			perror("many tokens");
 		}
@@ -46,19 +46,19 @@ void run_interactive_mode(void)
 
 /**
  * run_non_interactive_mode - run non-interactive mode
+ * @argc: number of arguments passed to shell
+ * @argv: string holding arguments
+ * @envp: environment variable
  *
  * Return: nothing
  */
-void run_non_interactive_mode(void)
+void run_non_interactive_mode(int argc, char **argv, char **envp)
 {
 	char *input = NULL, *input_cpy;
-	char **argv;
 	const char *delim = " \n";
 	ssize_t nchars_read;
-	extern char **environ;
-	char **env = environ;
+	char **env = envp;
 	size_t n = 0;
-	int num_tokens;
 
 	while (1)
 	{
@@ -70,10 +70,10 @@ void run_non_interactive_mode(void)
 		input_cpy = allocate(nchars_read);
 		_strcpy(input_cpy, input);
 
-		argv = parse_input(input, delim, &num_tokens);
+		argv = parse_input(input, delim, &argc);
 
-		num_tokens = num_token(input_cpy, delim);
-		if (num_tokens != 2)
+		argc = num_token(input_cpy, delim);
+		if (argc != 2)
 		{
 			perror("many tokens");
 		}
@@ -90,18 +90,19 @@ void run_non_interactive_mode(void)
  * main - simple shell
  * @argc: number of arguments passed to main function
  * @argv: double pointer to arguments in string format
+ * @envp: environment variable
  *
  * Return: 0 (success)
  */
-int main()
+int main(int argc, char **argv, char **envp)
 {
 	if (isatty(STDIN_FILENO))
 	{
-		run_interactive_mode();
+		run_interactive_mode(argc, argv, envp);
 	}
 	else
 	{
-		run_non_interactive_mode();
+		run_non_interactive_mode(argc, argv, envp);
 	}
 	return (0);
 }
