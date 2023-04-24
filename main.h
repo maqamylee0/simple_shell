@@ -23,5 +23,6 @@ void *safe_malloc(size_t size);
 char **parse_input(char *input, const char *delim, int *num_tokens);
 void execute(char **argv, char **env);
 int _putchar(char c);
+ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
 
 #endif /* _MAIN__H_ */
