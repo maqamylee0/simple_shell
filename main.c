@@ -35,6 +35,7 @@ void run_interactive_mode(int argc, char **argv, char **envp)
 		
 		cleanup(argv);
 	}
+	free(input_cpy);
 	free(input);
 }
 
@@ -67,7 +68,7 @@ void run_non_interactive_mode(int argc, char **argv, char **envp)
 	argc = num_token(input_cpy, delim);
 	execute(argv, env);
 	cleanup(argv);
-
+	free(input_cpy);
 	free(input);
 }
 
