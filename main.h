@@ -15,8 +15,8 @@ char *allocate(int n);
 char *_strcpy(char *dest, char *src);
 void _puts(char *str);
 int num_token(char *str, const char *delim);
-void run_non_interactive_mode();
-void run_interactive_mode();
+void run_non_interactive_mode(int argc, char **argv, char **envp);
+void run_interactive_mode(int argc, char **argv, char **envp);
 void cleanup(char **argv);
 void error(char *msg);
 void *safe_malloc(size_t size);
@@ -24,5 +24,11 @@ char **parse_input(char *input, const char *delim, int *num_tokens);
 void execute(char **argv, char **env);
 int _putchar(char c);
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
+void execute_command(char *cmd_path, char **argv, char **env);
+char *get_location(char *command);
+int _strlen(char *s);
+int _strcmp(char *s1, char *s2);
+char *_strcat(char *dest, char *src);
+char *_strdup(char *str);
 
 #endif /* _MAIN__H_ */
