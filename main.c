@@ -11,7 +11,7 @@
 void run_interactive_mode(int argc, char **argv, char **envp)
 {
 	char *prompt = "$";
-	char *input = NULL, *input_cpy;
+	char *input = NULL, *input_cpy = NULL;
 	const char *delim = " \n";
 	ssize_t nchars_read;
 	char **env = envp;
@@ -31,17 +31,12 @@ void run_interactive_mode(int argc, char **argv, char **envp)
 		argv = parse_input(input, delim, &argc);
 
 		argc = num_token(input_cpy, delim);
-		if (argc != 2)
-		{
-			perror("many tokens");
-		}
-		else
-		{
-			execute(argv, env);
-		}
+		check_argv(argv, env);
+		execute(argv, env);
+
 		cleanup(argv);
+		free(input_cpy);
 	}
-	free(input);
 }
 
 /**
@@ -54,36 +49,27 @@ void run_interactive_mode(int argc, char **argv, char **envp)
  */
 void run_non_interactive_mode(int argc, char **argv, char **envp)
 {
-	char *input = NULL, *input_cpy;
+	char *input = NULL, *input_cpy = NULL;
 	const char *delim = " \n";
 	ssize_t nchars_read;
 	char **env = envp;
 	size_t n = 0;
 
-	while (1)
+	nchars_read = _getline(&input, &n, stdin);
+	if (nchars_read == -1)
 	{
-		nchars_read = getline(&input, &n, stdin);
-		if (nchars_read == -1)
-		{
-			break;
-		}
-		input_cpy = allocate(nchars_read);
-		_strcpy(input_cpy, input);
-
-		argv = parse_input(input, delim, &argc);
-
-		argc = num_token(input_cpy, delim);
-		if (argc != 2)
-		{
-			perror("many tokens");
-		}
-		else
-		{
-			execute(argv, env);
-		}
-		cleanup(argv);
+		exit(1);
 	}
-	free(input);
+	input_cpy = allocate(nchars_read);
+	_strcpy(input_cpy, input);
+
+	argv = parse_input(input, delim, &argc);
+
+	argc = num_token(input_cpy, delim);
+	check_argv(argv, env);
+	execute(argv, env);
+	cleanup(argv);
+	free(input_cpy);
 }
 
 /**
