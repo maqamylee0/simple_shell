@@ -43,7 +43,7 @@ void execute(char **argv, char **env)
 {
 	char *cmd_path;
 
-	if (strchr(argv[0], '/') != NULL)
+	if (_strchr(argv[0], '/') != NULL)
 	{
 		execute_command(argv[0], argv, env);
 	}
