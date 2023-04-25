@@ -12,7 +12,7 @@ void execute(char **argv, char **env)
 	int status;
 	char *cmd_path = NULL;
 
-	if (strchr(argv[0], '/') != NULL)
+	if (_strchr(argv[0], '/') != NULL)
 	{
 		pid = fork();
 		if (pid == -1)
