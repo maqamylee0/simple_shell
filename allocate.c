@@ -8,7 +8,7 @@
  */
 char *allocate(int n)
 {
-	char *buff = malloc(sizeof(char) * n);
+	char *buff = malloc(sizeof(char) * n + 1);
 
 	if (!buff)
 	{

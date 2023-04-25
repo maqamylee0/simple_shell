@@ -11,7 +11,7 @@
 void run_interactive_mode(int argc, char **argv, char **envp)
 {
 	char *prompt = "$";
-	char *input = NULL, *input_cpy;
+	char *input = NULL, *input_cpy = NULL;
 	const char *delim = " \n";
 	ssize_t nchars_read;
 	char **env = envp;
@@ -34,9 +34,8 @@ void run_interactive_mode(int argc, char **argv, char **envp)
 		execute(argv, env);
 		
 		cleanup(argv);
+		free(input_cpy);
 	}
-	free(input_cpy);
-	free(input);
 }
 
 /**
@@ -49,7 +48,7 @@ void run_interactive_mode(int argc, char **argv, char **envp)
  */
 void run_non_interactive_mode(int argc, char **argv, char **envp)
 {
-	char *input = NULL, *input_cpy;
+	char *input = NULL, *input_cpy = NULL;
 	const char *delim = " \n";
 	ssize_t nchars_read;
 	char **env = envp;
@@ -69,7 +68,6 @@ void run_non_interactive_mode(int argc, char **argv, char **envp)
 	execute(argv, env);
 	cleanup(argv);
 	free(input_cpy);
-	free(input);
 }
 
 /**
