@@ -11,7 +11,7 @@ int check_argv(char **argv, char **env)
 {
 	if (_strcmp(argv[0], "exit") == 0)
 	{
-		exit_shell();
+		exit_shell(argv);
 	}
 	else if (_strcmp(argv[0], "env") == 0)
 	{

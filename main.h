@@ -32,7 +32,8 @@ char *_strcat(char *dest, char *src);
 char *_strdup(char *str);
 char *_strchr(char *s, char c);
 int check_argv(char **argv, char **env);
-void exit_shell(void);
+void exit_shell(char **argv);
 int _env(char **env);
+int _atoi(char *s);
 
 #endif /* _MAIN__H_ */
