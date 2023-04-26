@@ -33,8 +33,6 @@ void run_interactive_mode(int argc, char **argv, char **envp)
 		argc = num_token(input_cpy, delim);
 		check_argv(argv, env);
 		execute(argv, env);
-
-		cleanup(argv);
 		free(input_cpy);
 	}
 }
