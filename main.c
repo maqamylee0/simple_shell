@@ -66,7 +66,6 @@ void run_non_interactive_mode(int argc, char **argv, char **envp)
 	argc = num_token(input_cpy, delim);
 	check_argv(argv, env);
 	execute(argv, env);
-	cleanup(argv);
 	free(input_cpy);
 }
 
@@ -88,5 +87,6 @@ int main(int argc, char **argv, char **envp)
 	{
 		run_non_interactive_mode(argc, argv, envp);
 	}
+	free(argv);
 	return (0);
 }
