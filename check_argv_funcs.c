@@ -2,12 +2,22 @@
 
 /**
  * exit_shell - exits shell
- *
+ * @argv: array of strings
  * Return: nothing
  */
-void exit_shell(void)
+void exit_shell(char **argv)
 {
-	exit(EXIT_SUCCESS);
+	int status;
+
+	if (argv[1] != NULL)
+	{
+		status = _atoi(argv[1]);
+		exit(status);
+	}
+	else
+	{
+		exit(0);
+	}
 }
 
 /**
