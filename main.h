@@ -35,5 +35,6 @@ int check_argv(char **argv, char **env);
 void exit_shell(char **argv);
 int _env(char **env);
 int _atoi(char *s);
+int has_space(char *input);
 
 #endif /* _MAIN__H_ */
