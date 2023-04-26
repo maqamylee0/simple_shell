@@ -58,6 +58,12 @@ void run_non_interactive_mode(int argc, char **argv, char **envp)
 	{
 		exit(1);
 	}
+
+	if (isatty(STDIN_FILENO) == 0)
+	{
+		input[nchars_read - 1] = '\0';
+	}
+
 	input_cpy = allocate(nchars_read);
 	_strcpy(input_cpy, input);
 
