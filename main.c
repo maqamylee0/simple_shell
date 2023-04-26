@@ -62,6 +62,12 @@ void run_non_interactive_mode(int argc, char **argv, char **envp)
 	input_cpy = allocate(nchars_read);
 	_strcpy(input_cpy, input);
 
+	if (has_space(input) == 1)
+	{
+		free(input_cpy);
+		exit(0);
+	}
+
 	argv = parse_input(input, delim, &argc);
 
 	argc = num_token(input_cpy, delim);
