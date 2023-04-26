@@ -58,12 +58,7 @@ void run_non_interactive_mode(int argc, char **argv, char **envp)
 	{
 		exit(1);
 	}
-
-	if (isatty(STDIN_FILENO) == 0)
-	{
-		input[nchars_read - 1] = '\0';
-	}
-
+	input[nchars_read - 1] = '\0';
 	input_cpy = allocate(nchars_read);
 	_strcpy(input_cpy, input);
 
@@ -72,7 +67,6 @@ void run_non_interactive_mode(int argc, char **argv, char **envp)
 	argc = num_token(input_cpy, delim);
 	check_argv(argv, env);
 	execute(argv, env);
-	cleanup(argv);
 	free(input_cpy);
 }
 
