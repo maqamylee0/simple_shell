@@ -37,6 +37,11 @@ void exit_shell(char **argv, char *input, char *input_cpy)
 			i++;
 		}
 		status = _atoi(argv[1]);
+		if (status < 0)
+		{
+			error("illegal number");
+			exit(EXIT_FAILURE);
+		}
 		free(input);
 		free(input_cpy);
 		cleanup(argv);
