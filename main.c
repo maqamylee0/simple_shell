@@ -25,15 +25,14 @@ void run_interactive_mode(int argc, char **argv, char **envp)
 		{
 			exit(1);
 		}
-		input_cpy = allocate(nchars_read);
-		_strcpy(input_cpy, input);
-
+		input_cpy = _strdup(input);
 		argv = parse_input(input, delim, &argc);
 
 		argc = num_token(input_cpy, delim);
 		check_argv(argv, env);
 		execute(argv, env);
 		free(input_cpy);
+		cleanup(argv);
 	}
 }
 

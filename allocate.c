@@ -20,5 +20,6 @@ char *allocate(int n)
 	{
 		buff[i] = 0;
 	}
+
 	return (buff);
 }
