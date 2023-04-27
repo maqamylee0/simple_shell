@@ -33,6 +33,7 @@ void run_interactive_mode(int argc, char **argv, char **envp)
 		execute(argv, env);
 		free(input_cpy);
 		cleanup(argv);
+		free(input);
 	}
 }
 
