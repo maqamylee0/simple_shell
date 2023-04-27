@@ -74,6 +74,8 @@ void run_non_interactive_mode(int argc, char **argv, char **envp)
 	check_argv(argv, env);
 	execute(argv, env);
 	free(input_cpy);
+	free(input);
+	cleanup(argv);
 }
 
 /**
