@@ -18,7 +18,6 @@ char **parse_input(char *input, const char *delim, int *num_tokens)
 	if (!input_copy)
 		error("string duplication error");
 
-	*num_tokens = 0;
 	token = strtok(input_copy, delim);
 	while (token)
 	{
