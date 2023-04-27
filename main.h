@@ -36,5 +36,5 @@ void exit_shell(char **argv, char *input, char *input_cpy);
 int _env(char **env);
 int _atoi(char *s);
 int has_space(char *input);
-
+int _isletter(int c);
 #endif /* _MAIN__H_ */
