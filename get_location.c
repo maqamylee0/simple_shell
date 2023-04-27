@@ -8,7 +8,7 @@
  */
 char *get_location(char *command)
 {
-	char *path, *path_copy, *path_token, *file_path = NULL;
+	char *path = NULL, *path_copy = NULL, *path_token = NULL, *file_path = NULL;
 	int command_length, directory_length;
 	struct stat buffer;
 

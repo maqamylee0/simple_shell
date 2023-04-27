@@ -20,7 +20,5 @@ int num_token(char *str, const char *delim)
 		token_num++;
 		token = strtok(NULL, delim);
 	}
-	token_num++;
-
 	return (token_num);
 }
