@@ -22,12 +22,12 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 	{
 		return (-1);
 	}
-	buffer = allocate(buffer_size);
-	buffer_loc = buffer;
 	if (buffer_size == 0)
 	{
 		buffer_size = 100;
 	}
+	buffer = allocate(buffer_size);
+	buffer_loc = buffer;
 	while ((bytes_read = read(fd, buffer_loc, buffer_size - read_bytes)) > 0)
 	{
 		read_bytes += bytes_read;
@@ -47,7 +47,7 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 		free(buffer);
 		return (-1);
 	}
-	buffer[read_bytes - 1] = '\0';
+	buffer[read_bytes] = '\0';
 	*lineptr = buffer;
 	*n = buffer_size;
 	return (read_bytes);

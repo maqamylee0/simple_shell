@@ -2,7 +2,7 @@
 valgrind.rpt
 eshell
 *.swp
-
+hsh
 
 # Prerequisites
 *.d

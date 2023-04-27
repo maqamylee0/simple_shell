@@ -31,10 +31,10 @@ int _strcmp(char *s1, char *s2);
 char *_strcat(char *dest, char *src);
 char *_strdup(char *str);
 char *_strchr(char *s, char c);
-int check_argv(char **argv, char **env);
-void exit_shell(char **argv);
+int check_argv(char **argv, char **env, char *input, char *input_cpy);
+void exit_shell(char **argv, char *input, char *input_cpy);
 int _env(char **env);
 int _atoi(char *s);
 int has_space(char *input);
-
+int _isletter(int c);
 #endif /* _MAIN__H_ */
