@@ -47,7 +47,7 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 		free(buffer);
 		return (-1);
 	}
-	buffer[read_bytes - 1] = '\0';
+	buffer[read_bytes] = '\0';
 	*lineptr = buffer;
 	*n = buffer_size;
 	return (read_bytes);
