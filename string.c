@@ -90,7 +90,7 @@ char *_strcat(char *dest, char *src)
  */
 char *_strdup(char *str)
 {
-	char *str_copy;
+	char *str_copy = NULL;
 	unsigned int i = 0, j = 0;
 
 	if (str == NULL)

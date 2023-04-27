@@ -1,7 +1,7 @@
 # compiled outputs
-hsh
 valgrind.rpt
 eshell
+*.swp
 
 
 # Prerequisites

@@ -12,10 +12,10 @@ int has_space(char *input)
 
 	for (i = 0; input[i] != '\0'; i++)
 	{
-		if (input[i] == ' ')
+		if (input[i] != ' ')
 		{
-			return (1);
+			return (0);
 		}
 	}
-	return (0);
+	return (1);
 }
