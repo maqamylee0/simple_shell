@@ -32,7 +32,7 @@ void exit_shell(char **argv, char *input, char *input_cpy)
 			if (_isletter(argv[1][i]))
 			{
 				error("illegal number");
-				exit(EXIT_FAILURE);
+				exit(1);
 			}
 			i++;
 		}
@@ -40,7 +40,7 @@ void exit_shell(char **argv, char *input, char *input_cpy)
 		if (status < 0)
 		{
 			error("illegal number");
-			exit(EXIT_FAILURE);
+			exit(1);
 		}
 		free(input);
 		free(input_cpy);
@@ -52,7 +52,7 @@ void exit_shell(char **argv, char *input, char *input_cpy)
 		free(input);
 		free(input_cpy);
 		cleanup(argv);
-		exit(1);
+		exit(0);
 	}
 }
 
