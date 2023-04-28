@@ -29,7 +29,7 @@ void exit_shell(char **argv, char *input, char *input_cpy)
 	{
 		while (argv[1][i])
 		{
-			if (_isletter(argv[1][i]))
+			if (_isletter(argv[1][i]) == 1)
 			{
 				error("illegal number");
 				exit(2);
