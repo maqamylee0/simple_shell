@@ -2,8 +2,8 @@
 
 /**
  * _realloc- reallocate space
- * @src: source pointer 
- * @dest: new space pointer
+ * @src: source pointer
+ * @size: new size
  * Return: pointer to destination
  */
 
