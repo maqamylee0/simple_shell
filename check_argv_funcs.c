@@ -52,7 +52,7 @@ void exit_shell(char **argv, char *input, char *input_cpy)
 		free(input);
 		free(input_cpy);
 		cleanup(argv);
-		exit(EXIT_SUCCESS);
+		exit(2);
 	}
 }
 
@@ -67,7 +67,10 @@ int _env(char **env)
 	int i;
 
 	for (i = 0; env[i] != NULL; i++)
+	{
 		_puts(env[i]);
+		_putchar('\n');
+	}
 
 	return (0);
 }
