@@ -22,7 +22,7 @@ int _isletter(int c)
  */
 void exit_shell(char **argv, char *input, char *input_cpy)
 {
-	int status;
+	int status = 0;
 	int i = 0;
 
 	if (argv[1] != NULL)
