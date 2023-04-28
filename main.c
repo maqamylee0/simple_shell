@@ -56,22 +56,27 @@ void run_non_interactive_mode(int argc, char **argv, char **envp)
 	nchars_read = _getline(&input, &n, stdin);
 	while (nchars_read != -1)
 	{
-		input[nchars_read - 1] = '\0';
-		input_cpy = allocate(nchars_read);
-		_strcpy(input_cpy, input);
-		if (has_space(input) == 1)
+		if (*input != '\n')
 		{
+			input[nchars_read - 1] = '\0';
+			input_cpy = allocate(nchars_read);
+			_strcpy(input_cpy, input);
+			if (has_space(input) == 1)
+			{
+				free(input_cpy);
+				exit(0);
+			}
+			argv = parse_input(input, delim, &argc);
+			argc = num_token(input_cpy, delim);
+			check_argv(argv, env, input, input_cpy);
+			execute(argv, env);
 			free(input_cpy);
-			exit(0);
+			free(input);
+			cleanup(argv);
+			nchars_read = _getline(&input, &n, stdin);
 		}
-		argv = parse_input(input, delim, &argc);
-		argc = num_token(input_cpy, delim);
-		check_argv(argv, env, input, input_cpy);
-		execute(argv, env);
-		free(input_cpy);
-		free(input);
-		cleanup(argv);
-		nchars_read = _getline(&input, &n, stdin);
+		else
+			nchars_read = _getline(&input, &n, stdin);
 	}
 }
 
