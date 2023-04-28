@@ -20,7 +20,7 @@ void run_interactive_mode(int argc, char **argv, char **envp)
 	while (1)
 	{
 		_puts(prompt);
-		nchars_read = _getline(&input, &n, stdin);
+		nchars_read = getline(&input, &n, stdin);
 		if (nchars_read == -1)
 		{
 			exit(1);
@@ -34,7 +34,6 @@ void run_interactive_mode(int argc, char **argv, char **envp)
 		free(input_cpy);
 		free(input);
 		cleanup(argv);
-		free(input);
 	}
 }
 
@@ -54,29 +53,26 @@ void run_non_interactive_mode(int argc, char **argv, char **envp)
 	char **env = envp;
 	size_t n = 0;
 
-	nchars_read = _getline(&input, &n, stdin);
-	if (nchars_read == -1)
+	nchars_read = getline(&input, &n, stdin);
+	while (nchars_read != -1)
 	{
-		exit(1);
-	}
-	input[nchars_read - 1] = '\0';
-	input_cpy = allocate(nchars_read);
-	_strcpy(input_cpy, input);
-
-	if (has_space(input) == 1)
-	{
+		input[nchars_read - 1] = '\0';
+		input_cpy = allocate(nchars_read);
+		_strcpy(input_cpy, input);
+		if (has_space(input) == 1)
+		{
+			free(input_cpy);
+			exit(0);
+		}
+		argv = parse_input(input, delim, &argc);
+		argc = num_token(input_cpy, delim);
+		check_argv(argv, env, input, input_cpy);
+		execute(argv, env);
 		free(input_cpy);
-		exit(0);
+		free(input);
+		cleanup(argv);
+		nchars_read = getline(&input, &n, stdin);
 	}
-
-	argv = parse_input(input, delim, &argc);
-
-	argc = num_token(input_cpy, delim);
-	check_argv(argv, env, input, input_cpy);
-	execute(argv, env);
-	free(input_cpy);
-	free(input);
-	cleanup(argv);
 }
 
 /**
