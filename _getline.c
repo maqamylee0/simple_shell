@@ -28,19 +28,19 @@ ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 	}
 	buffer = allocate(buffer_size);
 	buffer_loc = buffer;
-	while ((bytes_read = read(fd, buffer_loc, buffer_size - read_bytes)) > 0)
+	while ((bytes_read = read(fd, buffer_loc, 1)) > 0)
 	{
-		read_bytes += bytes_read;
+		read_bytes++;
 		if (read_bytes >= buffer_size)
 		{
 			buffer_size *= 2;
-			buffer = realloc(buffer, buffer_size);
+			buffer = _realloc(buffer, buffer_size);
 			if (buffer == NULL)
 				return (-1);
 		}
 		if (buffer[read_bytes - 1] == '\n')
 			break;
-		buffer_loc += read_bytes;
+		buffer_loc++;
 	}
 	if (bytes_read == -1 || bytes_read == 0)
 	{
