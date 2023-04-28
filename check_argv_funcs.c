@@ -49,10 +49,11 @@ void exit_shell(char **argv, char *input, char *input_cpy)
 	}
 	else
 	{
+		status = 2;
 		free(input);
 		free(input_cpy);
 		cleanup(argv);
-		exit(2);
+		exit(status);
 	}
 }
 
