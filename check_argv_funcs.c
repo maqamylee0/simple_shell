@@ -52,7 +52,14 @@ void exit_shell(char **argv, char *input, char *input_cpy)
 		free(input);
 		free(input_cpy);
 		cleanup(argv);
-		exit(2);
+		if (WEXITSTATUS(status) == 0)
+		{
+			exit(0);
+		}
+		else
+		{
+			exit(2);
+		}
 	}
 }
 
