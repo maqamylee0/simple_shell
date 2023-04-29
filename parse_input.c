@@ -14,24 +14,24 @@ char **parse_input(char *input, const char *delim, int *num_tokens)
 	int i;
 	char **argv;
 
-	input_copy = strdup(input);
+	input_copy = _strdup(input);
 	if (!input_copy)
 		error("string duplication error");
 	*num_tokens = 0;
-	token = strtok(input_copy, delim);
+	token = _strtok(input_copy, delim);
 	while (token)
 	{
 		(*num_tokens)++;
-		token = strtok(NULL, delim);
+		token = _strtok(NULL, delim);
 	}
 
 	argv = safe_malloc(sizeof(char *) * ((*num_tokens) + 1));
-	token = strtok(input, delim);
+	token = _strtok(input, delim);
 	for (i = 0; token; i++)
 	{
 		argv[i] = safe_malloc(sizeof(char) * (strlen(token) + 1));
 		strcpy(argv[i], token);
-		token = strtok(NULL, delim);
+		token = _strtok(NULL, delim);
 	}
 	argv[i] = NULL;
 
