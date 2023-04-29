@@ -18,7 +18,7 @@ void change_dir(char *cmd, char **argv, char **env)
 		setenv("PWD", current_dir, 1);
 	}
 	_puts(cmd);
-	_putchar('/');
+	_putchar('\n');
 }
 /**
  * fork_exec- child process
