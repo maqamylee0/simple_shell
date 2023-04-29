@@ -10,7 +10,22 @@ void execute(char **argv, char **env)
 {
 	pid_t pid;
 	int status;
-	char *cmd_path = NULL;
+	char *cmd_path = NULL, *cmd = NULL;
+
+	if (_strcmp(argv[0], "cd") == 0)
+	{
+		cmd = get_cd_path(argv, env);
+		if (chdir(cmd) != -1)
+		{
+			;
+		}
+		if (_strcmp(argv[1], "-") == 0)
+		{
+			_puts(cmd);
+			_putchar('\n');
+		}
+		return;
+	}
 
 	if (_strchr(argv[0], '/') != NULL)
 	{

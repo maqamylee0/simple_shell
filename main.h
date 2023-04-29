@@ -39,5 +39,7 @@ int has_space(char *input);
 int _isletter(int c);
 char *_realloc(char *ptr, size_t size);
 char *_strtok(char *str, const char *delim);
+char *_getenv(const char *name, char **env);
+char *get_cd_path(char **argv, char **env);
 
 #endif /* _MAIN__H_ */
