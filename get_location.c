@@ -17,7 +17,7 @@ char *get_location(char *command)
 	{
 		path_copy = _strdup(path);
 		command_length = _strlen(command);
-		path_token = strtok(path_copy, ":");
+		path_token = _strtok(path_copy, ":");
 		while (path_token != NULL)
 		{
 			directory_length = _strlen(path_token);
@@ -34,7 +34,7 @@ char *get_location(char *command)
 			else
 			{
 				free(file_path);
-				path_token = strtok(NULL, ":");
+				path_token = _strtok(NULL, ":");
 			}
 		}
 		free(path_copy);

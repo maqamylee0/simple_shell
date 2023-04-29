@@ -38,4 +38,6 @@ int _atoi(char *s);
 int has_space(char *input);
 int _isletter(int c);
 char *_realloc(char *ptr, size_t size);
+char *_strtok(char *str, const char *delim);
+
 #endif /* _MAIN__H_ */
