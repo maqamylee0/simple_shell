@@ -1,4 +1,52 @@
 #include "main.h"
+/**
+ * change_dir- changes directory
+ * @argv: input arguments
+ * @env: environment
+ * @cmd: path to directory
+ * Return: void
+ */
+void change_dir(char *cmd, char **argv, char **env)
+{
+	char current_dir[PATH_MAX];
+
+	cmd = get_cd_path(argv, env);
+	if (chdir(cmd) != -1)
+	{
+		getcwd(current_dir, sizeof(PATH_MAX));
+		setenv("OLDPWD", _getenv("PWD", env), 1);
+		setenv("PWD", current_dir, 1);
+	}
+	_puts(cmd);
+	_putchar('/');
+}
+/**
+ * fork_exec- child process
+ * @argv: arguments
+ * @env: environment
+ * @cmd: command to execute or path
+ *
+ * Return: void
+ */
+void fork_exec(char *cmd, char **argv, char **env)
+{
+	int status;
+	pid_t pid;
+
+	pid = fork();
+	if (pid == -1)
+		error(argv[0]);
+	else if (pid == 0)
+	{
+		if (execve(cmd, argv, env) == -1)
+			error(argv[0]);
+	}
+	else
+	{
+		while (wait(&status) != pid)
+			;
+	}
+}
 
 /**
  * execute - create child process and execute
@@ -8,62 +56,21 @@
  */
 void execute(char **argv, char **env)
 {
-	pid_t pid;
-	int status;
-	char cwd[PATH_MAX];
 	char *cmd_path = NULL, *cmd = NULL;
 
 	if (_strcmp(argv[0], "cd") == 0)
 	{
-		cmd = get_cd_path(argv, env);
-		if (chdir(cmd) != -1)
-		{
-			getcwd(cwd, sizeof(cwd));
-			setenv("OLDPWD", getenv("PWD"), 1);
-			setenv("PWD", cwd, 1);
-		}
-		/*if (_strcmp(argv[1], "-") == 0)
-		{
-			_puts(cmd);
-			_putchar('\n');
-		}*/
+		change_dir(cmd, argv, env);
 		return;
 	}
-
 	if (_strchr(argv[0], '/') != NULL)
-	{
-		pid = fork();
-		if (pid == -1)
-			error(argv[0]);
-		else if (pid == 0)
-		{
-			if (execve(argv[0], argv, env) == -1)
-				error(argv[0]);
-		}
-		else
-		{
-			while (wait(&status) != pid)
-				;
-		}
-	}
+		fork_exec(argv[0], argv, env);
 	else
 	{
 		cmd_path = get_location(argv[0]);
 		if (cmd_path == NULL)
 			error(argv[0]);
-		pid = fork();
-		if (pid == -1)
-			error(argv[0]);
-		else if (pid == 0)
-		{
-			if (execve(cmd_path, argv, env) == -1)
-				error(argv[0]);
-		}
-		else
-		{
-			while (wait(&status) != pid)
-				;
-		}
-		free(cmd_path);
+		fork_exec(cmd_path, argv, env);
 	}
+	free(cmd_path);
 }
