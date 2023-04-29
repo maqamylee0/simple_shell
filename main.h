@@ -10,6 +10,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
+#include <linux/limits.h>
 
 char *allocate(int n);
 char *_strcpy(char *dest, char *src);

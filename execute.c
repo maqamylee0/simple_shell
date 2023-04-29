@@ -10,6 +10,7 @@ void execute(char **argv, char **env)
 {
 	pid_t pid;
 	int status;
+	char cwd[PATH_MAX];
 	char *cmd_path = NULL, *cmd = NULL;
 
 	if (_strcmp(argv[0], "cd") == 0)
@@ -17,13 +18,15 @@ void execute(char **argv, char **env)
 		cmd = get_cd_path(argv, env);
 		if (chdir(cmd) != -1)
 		{
-			;
+			getcwd(cwd, sizeof(cwd));
+			setenv("OLDPWD", getenv("PWD"), 1);
+			setenv("PWD", cwd, 1);
 		}
-		if (_strcmp(argv[1], "-") == 0)
+		/*if (_strcmp(argv[1], "-") == 0)
 		{
 			_puts(cmd);
 			_putchar('\n');
-		}
+		}*/
 		return;
 	}
 
