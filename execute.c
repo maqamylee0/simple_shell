@@ -70,7 +70,7 @@ void execute(char **argv, char **env)
 		cmd_path = get_location(argv[0]);
 		if (cmd_path == NULL)
 			error(argv[0]);
-		fork_exec(cmd_path, argv, env);
+		fork_exec(cmd_path, argv, env)i;
+		free(cmd_path);
 	}
-	free(cmd_path);
 }
