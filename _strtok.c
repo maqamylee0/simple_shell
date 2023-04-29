@@ -10,33 +10,42 @@
 
 char *_strtok(char *str, const char *delim)
 {
-	int i = 0;
-	static char *count;
-	char *token = NULL;
+	const char *c;
+	static char *next_token;
+	char *current_token = NULL;
 
-	if (delim == NULL)
+	if (str)
+		next_token = str;
+	while (*next_token)
+	{
+		for (c = delim; *c; ++c)
+		{
+			if (*next_token == *c)
+				break;
+		}
+		if (!*c)
+		{
+			break;
+		}
+		++next_token;
+	}
+	if (!*next_token)
 		return (NULL);
-	if (str == NULL && *count == '\0')
+	current_token = next_token;
+
+	while (*next_token)
 	{
-		count = NULL;
-		return (NULL);
+		for (c = delim; *c; ++c)
+		{
+			if (*next_token == *c)
+				break;
+		}
+		if (*c)
+			break;
+		++next_token;
 	}
-	if (str != NULL && count == NULL)
-	{
-		token = allocate(_strlen(str));
-		count = _strdup(str);
-	}
-	if (str == NULL && *count == *delim)
-	{
-		i++;
-		token = allocate(_strlen(count));
-	}
-	while ((count[i] != *delim) && (count[i] != '\0'))
-	{
-		token[i] = count[i];
-		i++;
-	}
-	token[i] = '\0';
-	count = &count[i];
-	return (token);
+	if (*next_token)
+		*next_token++ = '\0';
+
+	return (current_token);
 }
