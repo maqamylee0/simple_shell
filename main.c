@@ -73,9 +73,7 @@ void run_non_interactive_mode(int argc, char **argv, char **envp)
 			argc = num_token(input_cpy, delim);
 			check_argv(argv, env, input, input_cpy);
 			if (_strcmp(argv[0], "env") != 0)
-			{
 				execute(argv, env);
-			}
 			free(input_cpy);
 			free(input);
 			cleanup(argv);
