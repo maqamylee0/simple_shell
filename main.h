@@ -10,7 +10,6 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
-#include <linux/limits.h>
 
 char *allocate(int n);
 char *_strcpy(char *dest, char *src);
@@ -42,5 +41,7 @@ char *_realloc(char *ptr, size_t size);
 char *_strtok(char *str, const char *delim);
 char *_getenv(const char *name, char **env);
 char *get_cd_path(char **argv, char **env);
+void execute_absolute_path(char **argv, char **env, int status);
+void execute_cmd_path(char **argv, char **env, int status, char *cmd_path);
 
 #endif /* _MAIN__H_ */

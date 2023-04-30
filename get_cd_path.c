@@ -15,7 +15,7 @@ char *get_cd_path(char **argv, char **env)
 	{
 		path = _getenv("HOME", env);
 	}
-	else if (_strcmp(argv[1], "-") == 0)
+	else if (argv[1] && _strcmp(argv[1], "-") == 0)
 	{
 		path = _getenv("OLDPWD", env);
 	}
